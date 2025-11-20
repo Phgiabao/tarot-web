@@ -94,137 +94,160 @@
 const tarotDeck = [
   {
     name: "The Fool",
-    img: "https://i.imgur.com/0Fool.png", // Thay bằng link thật
-    upright: "Khởi đầu mới, bước vào hành trình với niềm tin và ngây thơ. Hứa hẹn cơ hội, mời gọi phiêu lưu và sáng tạo không ràng buộc.",
-    reversed: "Thiếu suy xét, hành động liều lĩnh, bỏ qua dấu hiệu cảnh báo. Có thể là dấu hiệu cần chuẩn bị kĩ trước khi bước đi."
+    file: "0_the_fool.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1Nc2CCts61s-8JB_ZfAOS-qHRmEQnMFW0",
+    meaning_up: "Khởi đầu mới, tự do, niềm tin, sự ngây thơ tích cực.",
+    meaning_rev: "Thiếu trách nhiệm, liều lĩnh, do dự không dám bắt đầu."
   },
   {
     name: "The Magician",
-    img: "https://i.imgur.com/1Magician.png",
-    upright: "Khả năng biến ý tưởng thành hành động; tài năng, ý chí và sự tập trung đang ở phía bạn. Thời điểm để hành động.",
-    reversed: "Lạm dụng tài năng, gian lận, tự đánh lừa hoặc thiếu tập trung. Cần hoà hợp ý định và hành động."
+    file: "01_the_magician.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1F4kzdwnct_Itrmy9avgiRashHt373UHQ",
+    meaning_up: "Tập trung, sáng tạo, làm chủ kỹ năng, biến ý tưởng thành hiện thực.",
+    meaning_rev: "Thiếu tập trung, lừa dối, lạm dụng quyền năng, khả năng chưa khai mở."
   },
   {
     name: "The High Priestess",
-    img: "https://i.imgur.com/2HighPriestess.png",
-    upright: "Trực giác mạnh mẽ, bí mật, cần lắng nghe tiếng nói nội tâm. Thích hợp cho nghiên cứu, chiêm nghiệm.",
-    reversed: "Mất liên hệ với trực giác, thông tin bị che khuất hoặc hiểu lầm. Cẩn trọng với thông tin nửa vời."
+    file: "02_the_high_priestess.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1YBXLYpDnzuVFbM4feaXNySPFHXYzNWz4",
+    meaning_up: "Trực giác mạnh, tiềm thức, bí ẩn, lời nhắc hãy lắng nghe bên trong.",
+    meaning_rev: "Mất kết nối với trực giác, nghi ngờ bản thân, bí mật bị che giấu."
   },
   {
     name: "The Empress",
-    img: "https://i.imgur.com/3Empress.png",
-    upright: "Sinh sôi, nuôi dưỡng, sáng tạo. Giai đoạn thuận lợi cho mọi việc bắt đầu và phát triển.",
-    reversed: "Phụ thuộc, nuôi dưỡng thái quá hoặc lơ là bản thân. Cần chú ý chăm sóc cả tinh thần lẫn thể chất."
+    file: "03_the_empress.jpg",
+    img: "https://drive.google.com/uc?export=view&id=18tV4PgiZrufx4XovaC8-e_PrWf-7n2Ne",
+    meaning_up: "Tình yêu, nuôi dưỡng, sự phong phú, đẹp đẽ, sáng tạo.",
+    meaning_rev: "Phụ thuộc cảm xúc, thiếu tự chăm sóc, bế tắc sáng tạo."
   },
   {
     name: "The Emperor",
-    img: "https://i.imgur.com/4Emperor.png",
-    upright: "Trật tự, quyền lực, cấu trúc và lãnh đạo. Thời điểm cần quyết đoán và nắm quyền kiềm chế.",
-    reversed: "Cứng nhắc, lạm quyền hoặc thiếu linh hoạt. Tránh áp đặt ý chí lên người khác."
+    file: "04_the_emperor.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1GbrqEHoxT0kZTSvIwklfeFt7PZWv6F3z",
+    meaning_up: "Kỷ luật, kiểm soát, quyền lực, nền tảng vững chắc.",
+    meaning_rev: "Cứng nhắc, độc đoán, mất quyền kiểm soát, tổ chức kém."
   },
   {
     name: "The Hierophant",
-    img: "https://i.imgur.com/5Hierophant.png",
-    upright: "Giá trị truyền thống, học hỏi từ người đi trước, tìm một mentor hoặc hệ thống để đi theo.",
-    reversed: "Nổi loạn với chuẩn mực, từ chối luật lệ; hoặc cần tìm phương pháp học mới phù hợp hơn."
+    file: "05_the_hierophant.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1OsDjzLhDaZgQ2AP7e6HMVqhzxywLGxU4",
+    meaning_up: "Truyền thống, kiến thức, quy tắc, cố vấn đáng tin.",
+    meaning_rev: "Phá cách, tư duy tự do, chống lại khuôn mẫu gò bó."
   },
   {
     name: "The Lovers",
-    img: "https://i.imgur.com/6Lovers.png",
-    upright: "Tình yêu, lựa chọn có chiều sâu, hòa hợp và liên kết cảm xúc. Quyết định quan trọng liên quan đến mối quan hệ.",
-    reversed: "Mâu thuẫn, lựa chọn sai, hoặc cấu trúc mối quan hệ cần nhìn lại. Tránh quyết định bốc đồng."
+    file: "06_the_lovers.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1jrk0i4HkDzBPK6juVZzAy5eSC-Bs5P4F",
+    meaning_up: "Sự lựa chọn quan trọng, tình yêu sâu sắc, hòa hợp.",
+    meaning_rev: "Mâu thuẫn, lựa chọn sai, mất cân bằng trong quan hệ."
   },
   {
     name: "The Chariot",
-    img: "https://i.imgur.com/7Chariot.png",
-    upright: "Thắng lợi nhờ ý chí và kỷ luật. Tiến lên bằng quyết tâm kiểm soát hoàn cảnh.",
-    reversed: "Mất kiểm soát, xung đột nội tại, cần đánh giá lại chiến lược để tránh va chạm."
+    file: "07_the_chariot.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1IGc73EaXF1uOLFmRqynpQvEpzJ9GBz19",
+    meaning_up: "Chiến thắng, quyết tâm, kiểm soát bản thân.",
+    meaning_rev: "Mất phương hướng, thiếu động lực, xung đột nội tâm."
   },
   {
     name: "Strength",
-    img: "https://i.imgur.com/8Strength.png",
-    upright: "Lòng can đảm, sức mạnh nội tâm, kiên nhẫn và nhân từ. Vượt nghịch cảnh bằng tâm thế bình tĩnh.",
-    reversed: "Thiếu tự tin, kiệt sức, dễ bị khuấy động cảm xúc. Cần hồi phục và tìm lại nội lực."
+    file: "08_strength.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1Otv-DaRUlJ5B6ScI5DCdZE8sC6Le8p5n",
+    meaning_up: "Dũng khí, mềm mỏng nhưng kiên định, kiểm soát cảm xúc.",
+    meaning_rev: "Tự ti, mất cân bằng cảm xúc, dễ nóng nảy."
   },
   {
     name: "The Hermit",
-    img: "https://i.imgur.com/9Hermit.png",
-    upright: "Tìm kiếm nội tâm, cần thời gian cô độc để tìm câu trả lời. Học hỏi qua im lặng và tĩnh lặng.",
-    reversed: "Cô lập quá mức hoặc trì hoãn giao tiếp; có thể là dấu hiệu của lẩn tránh vấn đề."
+    file: "09_the_hermit.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1zjK9YxTdpHD7SkQsm4Wvo8C-NOdW_8Dx",
+    meaning_up: "Tìm kiếm sự thật, soi chiếu nội tâm, trí tuệ sâu sắc.",
+    meaning_rev: "Cô lập, sợ đối mặt sự thật, tránh né hướng đi đúng."
   },
   {
     name: "Wheel of Fortune",
-    img: "https://i.imgur.com/10Wheel.png",
-    upright: "Chu kỳ, cơ hội, vận may và thay đổi. Một bước ngoặt có thể đến, hãy chuẩn bị đón nhận.",
-    reversed: "Kháng cự thay đổi, vận may bị trì hoãn; cần thích ứng để giảm thiểu tổn thất."
+    file: "10_wheel_of_fortune.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1RJbR-HoHQj-UXN8g2Klzt2OXJHUMztcC",
+    meaning_up: "Vận may thay đổi tích cực, chu kỳ mới mở ra.",
+    meaning_rev: "Trì trệ, sự kiện lặp lại, cảm giác mắc kẹt."
   },
   {
     name: "Justice",
-    img: "https://i.imgur.com/11Justice.png",
-    upright: "Công bằng, quyết định minh bạch, trách nhiệm và sự cân bằng. Sự thật được phơi bày.",
-    reversed: "Bất công, thiên vị, hoặc kết quả bị trì hoãn; cần minh bạch hơn trong hành động."
+    file: "11_justice.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1fFEBqt6Ae4L2irn-oeVqpqS2_dqCKoeO",
+    meaning_up: "Công bằng, karma, lựa chọn cần lý trí.",
+    meaning_rev: "Thiên vị, bất công, né tránh trách nhiệm."
   },
   {
     name: "The Hanged Man",
-    img: "https://i.imgur.com/12Hanged.png",
-    upright: "Tạm dừng để nhìn nhận lại, đổi góc nhìn. Hi sinh có chủ đích để nhận thức mới.",
-    reversed: "Bế tắc, trì hoãn thiếu lối thoát; cần động lực mới để phá vỡ vòng lẩn quẩn."
+    file: "12_the_hanged_man.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1V1reM7N23_uF8ftzbc-CBqaz4-HZkBYL",
+    meaning_up: "Buông bỏ, nhìn vấn đề theo góc mới, chấp nhận.",
+    meaning_rev: "Bị treo lơ lửng, trì hoãn, không chịu thay đổi."
   },
   {
     name: "Death",
-    img: "https://i.imgur.com/13Death.png",
-    upright: "Kết thúc để mở ra điều mới; chuyển hóa sâu sắc, giải phóng cũ để đón mới.",
-    reversed: "Kháng cự thay đổi, trì trệ hoặc chậm chuyển hoá; cần quyết liệt buông bỏ."
+    file: "13_death.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1QHWAo6umBzXO_B53sMCE62oKAERvYsyv",
+    meaning_up: "Kết thúc cần thiết, tái sinh, chuyển hóa mạnh mẽ.",
+    meaning_rev: "Bám víu cái cũ, sợ thay đổi, trì hoãn kết thúc."
   },
   {
     name: "Temperance",
-    img: "https://i.imgur.com/14Temperance.png",
-    upright: "Hài hòa, điều độ, chữa lành; pha trộn các yếu tố để tìm sự trung dung.",
-    reversed: "Mất cân bằng, thiếu điều độ; hãy điều chỉnh lại thói quen và mối quan hệ."
+    file: "14_temperance.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1eED-cvpF6hIzEIxYy6lM0KPYme62EGy8",
+    meaning_up: "Hài hòa, cân bằng, chữa lành, phối hợp tốt.",
+    meaning_rev: "Mất kiên nhẫn, cực đoan, thiếu cân bằng."
   },
   {
     name: "The Devil",
-    img: "https://i.imgur.com/15Devil.png",
-    upright: "Ràng buộc, cám dỗ, thói quen xấu hoặc sự phụ thuộc; đối diện bóng tối cá nhân.",
-    reversed: "Bắt đầu giải phóng khỏi ràng buộc, có cơ hội chiết thoát nếu dám đối mặt."
+    file: "15_the_devil.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1pR0cshNJdeMt0PA1aFrXP8ylKhbonx1h",
+    meaning_up: "Dính mắc, ham muốn, cám dỗ, ràng buộc.",
+    meaning_rev: "Thoát khỏi ràng buộc, nhận ra sự thật, giải phóng."
   },
   {
     name: "The Tower",
-    img: "https://i.imgur.com/16Tower.png",
-    upright: "Sụp đổ đột ngột, phơi bày chân tường; thay đổi mạnh mẽ nhưng mở đường cho tái thiết.",
-    reversed: "Sự cố nhỏ hơn hoặc né tránh sự thật; cảnh giác vì nền tảng có thể yếu."
+    file: "16_the_tower.jpg",
+    img: "https://drive.google.com/uc?export=view&id=112Z5hVMB6FDK8Zmdyq3bzFHnvJof550h",
+    meaning_up: "Đột ngột sụp đổ, sự thật phơi bày, thay đổi ngoài ý muốn.",
+    meaning_rev: "Tránh được tai họa, thay đổi nhẹ hơn dự đoán."
   },
   {
     name: "The Star",
-    img: "https://i.imgur.com/17Star.png",
-    upright: "Hy vọng, chữa lành, niềm tin vào tương lai; nguồn cảm hứng và phục hồi.",
-    reversed: "Mất hy vọng tạm thời, thiếu động lực; cần tìm nguồn cảm hứng mới."
+    file: "17_the_star.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1xjTgLIJDeYaEvE_kxQ2SRPyWztE163rg",
+    meaning_up: "Hy vọng, chữa lành, niềm tin, cảm hứng.",
+    meaning_rev: "Mất niềm tin, hoài nghi, chậm phục hồi."
   },
   {
     name: "The Moon",
-    img: "https://i.imgur.com/18Moon.png",
-    upright: "Bí ẩn, trực giác, giấc mơ, nỗi sợ và ẩn ý; hãy tin vào trực giác nhưng kiểm chứng thực tế.",
-    reversed: "Ảo giác, lẫn lộn; thông tin sai lệch hoặc cảm xúc áp đảo khiến hiểu lầm."
+    file: "18_the_moon.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1e6xiYU-Soq4azHoW5Arq4XrT_THtXdey",
+    meaning_up: "Ảo giác, trực giác mạnh, mơ hồ, cảm xúc lên xuống.",
+    meaning_rev: "Sự thật sáng tỏ, bớt lo âu, vượt qua ảo tưởng."
   },
   {
     name: "The Sun",
-    img: "https://i.imgur.com/19Sun.png",
-    upright: "Sáng tỏ, niềm vui, thành tựu và sự rõ ràng; thành công và năng lượng tươi sáng.",
-    reversed: "Thành công tạm thời, chậm trễ nhỏ; cần duy trì thái độ lạc quan nhưng thực tế."
+    file: "19_the_sun.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1302MNQqXJAJKk6zqHpp-jUHZjmKudu1L",
+    meaning_up: "Thành công, niềm vui, sự trong sáng, năng lượng tích cực.",
+    meaning_rev: "Tự tin quá mức, chậm tiến, niềm vui bị trì hoãn."
   },
   {
     name: "Judgement",
-    img: "https://i.imgur.com/20Judgement.png",
-    upright: "Tỉnh thức, đánh giá lại, cơ hội tái sinh; thời điểm nhìn lại và hành động có trách nhiệm.",
-    reversed: "Tự phán xét quá mức hoặc trì hoãn thay đổi; cần dũng khí chấp nhận và tiến lên."
+    file: "20_judgement.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1NnvvrECCRTQ2kL3e_IU-BdQEwASaIHrY",
+    meaning_up: "Thức tỉnh, quyết định lớn, bước ngoặt, nghiệp quả.",
+    meaning_rev: "Do dự, tự phê phán quá mức, lặp sai lầm cũ."
   },
   {
     name: "The World",
-    img: "https://i.imgur.com/21World.png",
-    upright: "Hoàn thành, viên mãn, đạt được mục tiêu; cảm giác trọn vẹn và hội nhập.",
-    reversed: "Chưa hoàn tất, cảm giác thiếu hụt nhỏ; cần hoàn thiện nốt những chi tiết còn sót."
+    file: "21_the_world.jpg",
+    img: "https://drive.google.com/uc?export=view&id=1hL_po2WjaQ2l_nvjDZtiJeS26-Ljtq3p",
+    meaning_up: "Hoàn thành, trọn vẹn, kết thúc đẹp, đạt mục tiêu.",
+    meaning_rev: "Còn thiếu một bước cuối, chưa thật sự khép lại."
   }
 ];
+
 // --------- end deck ---------
 
 // Hữu ích: escape html
@@ -398,3 +421,4 @@ document.getElementById('resetBtn').addEventListener('click', ()=>{
 </script>
 </body>
 </html>
+
