@@ -1,5 +1,0 @@
-body {
-  background: linear-gradient(180deg,#0b0720,#0b0b1a);
-  background-size: cover;
-}
-
