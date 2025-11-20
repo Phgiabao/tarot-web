@@ -5,435 +5,140 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Tarot 3 lá — Bói theo chủ đề (Major Arcana)</title>
 <style>
-  html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+:root{
+  --bg:#0b0720;
+  --panel:#0f1224;
+  --accent:#8b5cf6;
+  --muted:#c9c9e6;
+  --card-back: linear-gradient(135deg,#4c1d95,#7c3aed);
 }
-
-body {
-  background: linear-gradient(180deg,#0b0720,#0b0b1a);
-  background-size: cover;
-}
-
-.wrap {
-  min-height: 100vh; /* chiếm 100% chiều cao màn hình */
-}
-  :root{
-    --bg:#0b0720;
-    --panel:#0f1224;
-    --accent:#8b5cf6;
-    --muted:#c9c9e6;
-    --card-back: linear-gradient(135deg,#4c1d95,#7c3aed);
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,var(--bg),#0b0b1a);color:var(--muted);-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1100px;margin:28px auto;padding:20px}
-  .panel{background:rgba(255,255,255,0.02);border-radius:14px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
-  h1{margin:0;color:#fff;font-size:24px}
-  .lead{color:#d6d6f8;margin-top:8px}
-  .controls{display:flex;gap:12px;align-items:center;margin-top:14px}
-  select, input[type="text"]{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted)}
-  button{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
-  .btn-primary{background:linear-gradient(90deg,var(--accent),#6d28d9);color:white}
-  .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
-
-  .cards-row{display:flex;gap:18px;justify-content:center;margin-top:22px}
-  .card-outer{width:180px;height:300px;perspective:1400px}
-  .card{width:100%;height:100%;border-radius:12px;position:relative;transform-style:preserve-3d;transition:transform 0.9s cubic-bezier(.2,.9,.2,1);cursor:pointer;box-shadow:0 18px 40px rgba(0,0,0,0.5)}
-  .card.flip{transform:rotateY(180deg)}
-  .card-face{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:12px}
-  .card-back{background:var(--card-back);color:white;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:16px}
-  .card-front{transform:rotateY(180deg);background:linear-gradient(180deg,#101224,#15163a);color:var(--muted);overflow:auto}
-  .card-front img{width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:8px}
-  .card-title{font-weight:700;color:#fff;margin-bottom:6px}
-  .card-pos{font-size:13px;color:#cfcff0;margin-bottom:6px}
-  .card-meaning{font-size:13px;color:#dfe3ff;white-space:pre-wrap}
-
-  .summary{margin-top:18px;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);color:var(--muted)}
-  pre.summary-text{white-space:pre-wrap;margin:0;color:#eef}
-
-  .history{margin-top:12px;color:#b9bcd9;font-size:13px}
-
-  @media (max-width:900px){
-    .cards-row{flex-wrap:wrap}
-    .card-outer{width:43%;height:260px}
-  }
+*{box-sizing:border-box;}
+html, body{height:100%;margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,var(--bg),#0b0b1a);color:var(--muted);}
+.wrap{max-width:1100px;margin:28px auto;padding:20px;min-height:100vh;}
+.panel{background:rgba(255,255,255,0.02);border-radius:14px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,0.6);}
+h1{margin:0;color:#fff;font-size:24px;}
+.lead{color:#d6d6f8;margin-top:8px;}
+.controls{display:flex;gap:12px;align-items:center;margin-top:14px;}
+select,input[type="text"]{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted);}
+button{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:600;}
+.btn-primary{background:linear-gradient(90deg,var(--accent),#6d28d9);color:white;}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);}
+.cards-row{display:flex;gap:18px;justify-content:center;margin-top:22px;}
+.card-outer{width:180px;height:300px;perspective:1400px;}
+.card{width:100%;height:100%;border-radius:12px;position:relative;transform-style:preserve-3d;transition:transform 0.9s cubic-bezier(.2,.9,.2,1);cursor:pointer;box-shadow:0 18px 40px rgba(0,0,0,0.5);}
+.card.flip{transform:rotateY(180deg);}
+.card-face{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:12px;}
+.card-back{background:var(--card-back);color:white;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.card-front{transform:rotateY(180deg);background:linear-gradient(180deg,#101224,#15163a);color:var(--muted);overflow:auto;}
+.card-front img{width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:8px;}
+.card-title{font-weight:700;color:#fff;margin-bottom:6px;}
+.card-pos{font-size:13px;color:#cfcff0;margin-bottom:6px;}
+.card-meaning{font-size:13px;color:#dfe3ff;white-space:pre-wrap;}
+.summary{margin-top:18px;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);color:var(--muted);}
+pre.summary-text{white-space:pre-wrap;margin:0;color:#eef;}
+.history{margin-top:12px;color:#b9bcd9;font-size:13px;}
+@media(max-width:900px){.cards-row{flex-wrap:wrap}.card-outer{width:43%;height:260px;}}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="panel">
-      <h1>Tarot 3 lá — Past / Present / Future</h1>
-      <div class="lead">Chọn chủ đề, nhập (tuỳ chọn) câu hỏi, bấm "Rút bài". Hệ thống rút 3 lá (không trùng), gán Thẳng/Ngược, hiển thị ý nghĩa từng lá và kết luận tổng quan theo chủ đề.</div>
-
-      <div class="controls">
-        <select id="topic">
-          <option value="tongquat">Tổng quát</option>
-          <option value="tinhyeu">Tình yêu</option>
-          <option value="congviec">Công việc</option>
-          <option value="hoctap">Học tập</option>
-          <option value="suckhoe">Sức khỏe</option>
-        </select>
-
-        <input id="question" type="text" placeholder="Nhập câu hỏi (tùy chọn)" style="flex:1">
-
-        <button id="drawBtn" class="btn-primary">Rút 3 lá</button>
-        <button id="resetBtn" class="btn-ghost">Làm mới</button>
-      </div>
-
-      <div class="cards-row" id="cardsRow">
-        <div class="card-outer"><div id="card0" class="card"><div class="card-face card-back">BÍ ẨN</div><div class="card-face card-front"></div></div></div>
-        <div class="card-outer"><div id="card1" class="card"><div class="card-face card-back">BÍ ẨN</div><div class="card-face card-front"></div></div></div>
-        <div class="card-outer"><div id="card2" class="card"><div class="card-face card-back">BÍ ẨN</div><div class="card-face card-front"></div></div></div>
-      </div>
-
-      <div id="summaryBox" class="summary" style="display:none">
-        <div style="font-weight:700;color:#fff">Kết luận tổng quan</div>
-        <pre id="summaryText" class="summary-text"></pre>
-      </div>
-
-      <div id="status" class="history"></div>
+<div class="wrap">
+  <div class="panel">
+    <h1>Tarot 3 lá — Past / Present / Future</h1>
+    <div class="lead">Chọn chủ đề, nhập (tùy chọn) câu hỏi, bấm "Rút bài". Hệ thống rút 3 lá (không trùng), gán Thẳng/Ngược, hiển thị ý nghĩa từng lá và kết luận tổng quan theo chủ đề.</div>
+    <div class="controls">
+      <select id="topic">
+        <option value="tongquat">Tổng quát</option>
+        <option value="tinhyeu">Tình yêu</option>
+        <option value="congviec">Công việc</option>
+        <option value="hoctap">Học tập</option>
+        <option value="suckhoe">Sức khỏe</option>
+      </select>
+      <input id="question" type="text" placeholder="Nhập câu hỏi (tùy chọn)" style="flex:1">
+      <button id="drawBtn" class="btn-primary">Rút 3 lá</button>
+      <button id="resetBtn" class="btn-ghost">Làm mới</button>
     </div>
+
+    <div class="cards-row" id="cardsRow">
+      <div class="card-outer"><div id="card0" class="card"><div class="card-face card-back">BÍ ẨN</div><div class="card-face card-front"></div></div></div>
+      <div class="card-outer"><div id="card1" class="card"><div class="card-face card-back">BÍ ẨN</div><div class="card-face card-front"></div></div></div>
+      <div class="card-outer"><div id="card2" class="card"><div class="card-face card-back">BÍ ẨN</div><div class="card-face card-front"></div></div></div>
+    </div>
+
+    <div id="summaryBox" class="summary" style="display:none">
+      <div style="font-weight:700;color:#fff">Kết luận tổng quan</div>
+      <pre id="summaryText" class="summary-text"></pre>
+    </div>
+
+    <div id="status" class="history"></div>
   </div>
+</div>
 
 <script>
-/*
-  TAROT 3 LÁ — Toàn bộ 22 lá Major Arcana
-  Mỗi lá: { name, img, upright, reversed }
-  NOTE: các link img là ví dụ. Thay bằng link ảnh của bạn (Drive/host).
-*/
-
-// --------- Deck (22 Major Arcana) --------------
+// -------------- Deck Major Arcana --------------
 const tarotDeck = [
-  {
-    name: "The Fool",
-    file: "0_the_fool.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1Nc2CCts61s-8JB_ZfAOS-qHRmEQnMFW0",
-    meaning_up: "Khởi đầu mới, tự do, niềm tin, sự ngây thơ tích cực.",
-    meaning_rev: "Thiếu trách nhiệm, liều lĩnh, do dự không dám bắt đầu."
-  },
-  {
-    name: "The Magician",
-    file: "01_the_magician.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1F4kzdwnct_Itrmy9avgiRashHt373UHQ",
-    meaning_up: "Tập trung, sáng tạo, làm chủ kỹ năng, biến ý tưởng thành hiện thực.",
-    meaning_rev: "Thiếu tập trung, lừa dối, lạm dụng quyền năng, khả năng chưa khai mở."
-  },
-  {
-    name: "The High Priestess",
-    file: "02_the_high_priestess.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1YBXLYpDnzuVFbM4feaXNySPFHXYzNWz4",
-    meaning_up: "Trực giác mạnh, tiềm thức, bí ẩn, lời nhắc hãy lắng nghe bên trong.",
-    meaning_rev: "Mất kết nối với trực giác, nghi ngờ bản thân, bí mật bị che giấu."
-  },
-  {
-    name: "The Empress",
-    file: "03_the_empress.jpg",
-    img: "https://drive.google.com/uc?export=view&id=18tV4PgiZrufx4XovaC8-e_PrWf-7n2Ne",
-    meaning_up: "Tình yêu, nuôi dưỡng, sự phong phú, đẹp đẽ, sáng tạo.",
-    meaning_rev: "Phụ thuộc cảm xúc, thiếu tự chăm sóc, bế tắc sáng tạo."
-  },
-  {
-    name: "The Emperor",
-    file: "04_the_emperor.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1GbrqEHoxT0kZTSvIwklfeFt7PZWv6F3z",
-    meaning_up: "Kỷ luật, kiểm soát, quyền lực, nền tảng vững chắc.",
-    meaning_rev: "Cứng nhắc, độc đoán, mất quyền kiểm soát, tổ chức kém."
-  },
-  {
-    name: "The Hierophant",
-    file: "05_the_hierophant.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1OsDjzLhDaZgQ2AP7e6HMVqhzxywLGxU4",
-    meaning_up: "Truyền thống, kiến thức, quy tắc, cố vấn đáng tin.",
-    meaning_rev: "Phá cách, tư duy tự do, chống lại khuôn mẫu gò bó."
-  },
-  {
-    name: "The Lovers",
-    file: "06_the_lovers.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1jrk0i4HkDzBPK6juVZzAy5eSC-Bs5P4F",
-    meaning_up: "Sự lựa chọn quan trọng, tình yêu sâu sắc, hòa hợp.",
-    meaning_rev: "Mâu thuẫn, lựa chọn sai, mất cân bằng trong quan hệ."
-  },
-  {
-    name: "The Chariot",
-    file: "07_the_chariot.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1IGc73EaXF1uOLFmRqynpQvEpzJ9GBz19",
-    meaning_up: "Chiến thắng, quyết tâm, kiểm soát bản thân.",
-    meaning_rev: "Mất phương hướng, thiếu động lực, xung đột nội tâm."
-  },
-  {
-    name: "Strength",
-    file: "08_strength.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1Otv-DaRUlJ5B6ScI5DCdZE8sC6Le8p5n",
-    meaning_up: "Dũng khí, mềm mỏng nhưng kiên định, kiểm soát cảm xúc.",
-    meaning_rev: "Tự ti, mất cân bằng cảm xúc, dễ nóng nảy."
-  },
-  {
-    name: "The Hermit",
-    file: "09_the_hermit.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1zjK9YxTdpHD7SkQsm4Wvo8C-NOdW_8Dx",
-    meaning_up: "Tìm kiếm sự thật, soi chiếu nội tâm, trí tuệ sâu sắc.",
-    meaning_rev: "Cô lập, sợ đối mặt sự thật, tránh né hướng đi đúng."
-  },
-  {
-    name: "Wheel of Fortune",
-    file: "10_wheel_of_fortune.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1RJbR-HoHQj-UXN8g2Klzt2OXJHUMztcC",
-    meaning_up: "Vận may thay đổi tích cực, chu kỳ mới mở ra.",
-    meaning_rev: "Trì trệ, sự kiện lặp lại, cảm giác mắc kẹt."
-  },
-  {
-    name: "Justice",
-    file: "11_justice.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1fFEBqt6Ae4L2irn-oeVqpqS2_dqCKoeO",
-    meaning_up: "Công bằng, karma, lựa chọn cần lý trí.",
-    meaning_rev: "Thiên vị, bất công, né tránh trách nhiệm."
-  },
-  {
-    name: "The Hanged Man",
-    file: "12_the_hanged_man.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1V1reM7N23_uF8ftzbc-CBqaz4-HZkBYL",
-    meaning_up: "Buông bỏ, nhìn vấn đề theo góc mới, chấp nhận.",
-    meaning_rev: "Bị treo lơ lửng, trì hoãn, không chịu thay đổi."
-  },
-  {
-    name: "Death",
-    file: "13_death.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1QHWAo6umBzXO_B53sMCE62oKAERvYsyv",
-    meaning_up: "Kết thúc cần thiết, tái sinh, chuyển hóa mạnh mẽ.",
-    meaning_rev: "Bám víu cái cũ, sợ thay đổi, trì hoãn kết thúc."
-  },
-  {
-    name: "Temperance",
-    file: "14_temperance.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1eED-cvpF6hIzEIxYy6lM0KPYme62EGy8",
-    meaning_up: "Hài hòa, cân bằng, chữa lành, phối hợp tốt.",
-    meaning_rev: "Mất kiên nhẫn, cực đoan, thiếu cân bằng."
-  },
-  {
-    name: "The Devil",
-    file: "15_the_devil.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1pR0cshNJdeMt0PA1aFrXP8ylKhbonx1h",
-    meaning_up: "Dính mắc, ham muốn, cám dỗ, ràng buộc.",
-    meaning_rev: "Thoát khỏi ràng buộc, nhận ra sự thật, giải phóng."
-  },
-  {
-    name: "The Tower",
-    file: "16_the_tower.jpg",
-    img: "https://drive.google.com/uc?export=view&id=112Z5hVMB6FDK8Zmdyq3bzFHnvJof550h",
-    meaning_up: "Đột ngột sụp đổ, sự thật phơi bày, thay đổi ngoài ý muốn.",
-    meaning_rev: "Tránh được tai họa, thay đổi nhẹ hơn dự đoán."
-  },
-  {
-    name: "The Star",
-    file: "17_the_star.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1xjTgLIJDeYaEvE_kxQ2SRPyWztE163rg",
-    meaning_up: "Hy vọng, chữa lành, niềm tin, cảm hứng.",
-    meaning_rev: "Mất niềm tin, hoài nghi, chậm phục hồi."
-  },
-  {
-    name: "The Moon",
-    file: "18_the_moon.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1e6xiYU-Soq4azHoW5Arq4XrT_THtXdey",
-    meaning_up: "Ảo giác, trực giác mạnh, mơ hồ, cảm xúc lên xuống.",
-    meaning_rev: "Sự thật sáng tỏ, bớt lo âu, vượt qua ảo tưởng."
-  },
-  {
-    name: "The Sun",
-    file: "19_the_sun.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1302MNQqXJAJKk6zqHpp-jUHZjmKudu1L",
-    meaning_up: "Thành công, niềm vui, sự trong sáng, năng lượng tích cực.",
-    meaning_rev: "Tự tin quá mức, chậm tiến, niềm vui bị trì hoãn."
-  },
-  {
-    name: "Judgement",
-    file: "20_judgement.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1NnvvrECCRTQ2kL3e_IU-BdQEwASaIHrY",
-    meaning_up: "Thức tỉnh, quyết định lớn, bước ngoặt, nghiệp quả.",
-    meaning_rev: "Do dự, tự phê phán quá mức, lặp sai lầm cũ."
-  },
-  {
-    name: "The World",
-    file: "21_the_world.jpg",
-    img: "https://drive.google.com/uc?export=view&id=1hL_po2WjaQ2l_nvjDZtiJeS26-Ljtq3p",
-    meaning_up: "Hoàn thành, trọn vẹn, kết thúc đẹp, đạt mục tiêu.",
-    meaning_rev: "Còn thiếu một bước cuối, chưa thật sự khép lại."
-  }
+  {name:"The Fool", img:"https://drive.google.com/uc?export=view&id=1Nc2CCts61s-8JB_ZfAOS-qHRmEQnMFW0", meaning_up:"Khởi đầu mới, tự do, niềm tin, sự ngây thơ tích cực.", meaning_rev:"Thiếu trách nhiệm, liều lĩnh, do dự không dám bắt đầu."},
+  {name:"The Magician", img:"https://drive.google.com/uc?export=view&id=1F4kzdwnct_Itrmy9avgiRashHt373UHQ", meaning_up:"Tập trung, sáng tạo, làm chủ kỹ năng, biến ý tưởng thành hiện thực.", meaning_rev:"Thiếu tập trung, lừa dối, lạm dụng quyền năng, khả năng chưa khai mở."},
+  {name:"The High Priestess", img:"https://drive.google.com/uc?export=view&id=1YBXLYpDnzuVFbM4feaXNySPFHXYzNWz4", meaning_up:"Trực giác mạnh, tiềm thức, bí ẩn, lời nhắc hãy lắng nghe bên trong.", meaning_rev:"Mất kết nối với trực giác, nghi ngờ bản thân, bí mật bị che giấu."},
+  {name:"The Empress", img:"https://drive.google.com/uc?export=view&id=18tV4PgiZrufx4XovaC8-e_PrWf-7n2Ne", meaning_up:"Tình yêu, nuôi dưỡng, sự phong phú, đẹp đẽ, sáng tạo.", meaning_rev:"Phụ thuộc cảm xúc, thiếu tự chăm sóc, bế tắc sáng tạo."},
+  {name:"The Emperor", img:"https://drive.google.com/uc?export=view&id=1GbrqEHoxT0kZTSvIwklfeFt7PZWv6F3z", meaning_up:"Kỷ luật, kiểm soát, quyền lực, nền tảng vững chắc.", meaning_rev:"Cứng nhắc, độc đoán, mất quyền kiểm soát, tổ chức kém."},
+  {name:"The Hierophant", img:"https://drive.google.com/uc?export=view&id=1OsDjzLhDaZgQ2AP7e6HMVqhzxywLGxU4", meaning_up:"Truyền thống, kiến thức, quy tắc, cố vấn đáng tin.", meaning_rev:"Phá cách, tư duy tự do, chống lại khuôn mẫu gò bó."},
+  {name:"The Lovers", img:"https://drive.google.com/uc?export=view&id=1jrk0i4HkDzBPK6juVZzAy5eSC-Bs5P4F", meaning_up:"Sự lựa chọn quan trọng, tình yêu sâu sắc, hòa hợp.", meaning_rev:"Mâu thuẫn, lựa chọn sai, mất cân bằng trong quan hệ."},
+  {name:"The Chariot", img:"https://drive.google.com/uc?export=view&id=1IGc73EaXF1uOLFmRqynpQvEpzJ9GBz19", meaning_up:"Chiến thắng, quyết tâm, kiểm soát bản thân.", meaning_rev:"Mất phương hướng, thiếu động lực, xung đột nội tâm."},
+  {name:"Strength", img:"https://drive.google.com/uc?export=view&id=1Otv-DaRUlJ5B6ScI5DCdZE8sC6Le8p5n", meaning_up:"Dũng khí, mềm mỏng nhưng kiên định, kiểm soát cảm xúc.", meaning_rev:"Tự ti, mất cân bằng cảm xúc, dễ nóng nảy."},
+  {name:"The Hermit", img:"https://drive.google.com/uc?export=view&id=1zjK9YxTdpHD7SkQsm4Wvo8C-NOdW_8Dx", meaning_up:"Tìm kiếm sự thật, soi chiếu nội tâm, trí tuệ sâu sắc.", meaning_rev:"Cô lập, sợ đối mặt sự thật, tránh né hướng đi đúng."},
+  {name:"Wheel of Fortune", img:"https://drive.google.com/uc?export=view&id=1RJbR-HoHQj-UXN8g2Klzt2OXJHUMztcC", meaning_up:"Vận may thay đổi tích cực, chu kỳ mới mở ra.", meaning_rev:"Trì trệ, sự kiện lặp lại, cảm giác mắc kẹt."},
+  {name:"Justice", img:"https://drive.google.com/uc?export=view&id=1fFEBqt6Ae4L2irn-oeVqpqS2_dqCKoeO", meaning_up:"Công bằng, karma, lựa chọn cần lý trí.", meaning_rev:"Thiên vị, bất công, né tránh trách nhiệm."},
+  {name:"The Hanged Man", img:"https://drive.google.com/uc?export=view&id=1V1reM7N23_uF8ftzbc-CBqaz4-HZkBYL", meaning_up:"Buông bỏ, nhìn vấn đề theo góc mới, chấp nhận.", meaning_rev:"Bị treo lơ lửng, trì hoãn, không chịu thay đổi."},
+  {name:"Death", img:"https://drive.google.com/uc?export=view&id=1QHWAo6umBzXO_B53sMCE62oKAERvYsyv", meaning_up:"Kết thúc cần thiết, tái sinh, chuyển hóa mạnh mẽ.", meaning_rev:"Bám víu cái cũ, sợ thay đổi, trì hoãn kết thúc."},
+  {name:"Temperance", img:"https://drive.google.com/uc?export=view&id=1eED-cvpF6hIzEIxYy6lM0KPYme62EGy8", meaning_up:"Hài hòa, cân bằng, chữa lành, phối hợp tốt.", meaning_rev:"Mất kiên nhẫn, cực đoan, thiếu cân bằng."},
+  {name:"The Devil", img:"https://drive.google.com/uc?export=view&id=1pR0cshNJdeMt0PA1aFrXP8ylKhbonx1h", meaning_up:"Dính mắc, ham muốn, cám dỗ, ràng buộc.", meaning_rev:"Thoát khỏi ràng buộc, nhận ra sự thật, giải phóng."},
+  {name:"The Tower", img:"https://drive.google.com/uc?export=view&id=112Z5hVMB6FDK8Zmdyq3bzFHnvJof550h", meaning_up:"Đột ngột sụp đổ, sự thật phơi bày, thay đổi ngoài ý muốn.", meaning_rev:"Tránh được tai họa, thay đổi nhẹ hơn dự đoán."},
+  {name:"The Star", img:"https://drive.google.com/uc?export=view&id=1xjTgLIJDeYaEvE_kxQ2SRPyWztE163rg", meaning_up:"Hy vọng, chữa lành, niềm tin, cảm hứng.", meaning_rev:"Mất niềm tin, hoài nghi, chậm phục hồi."},
+  {name:"The Moon", img:"https://drive.google.com/uc?export=view&id=1e6xiYU-Soq4azHoW5Arq4XrT_THtXdey", meaning_up:"Ảo giác, trực giác mạnh, mơ hồ, cảm xúc lên xuống.", meaning_rev:"Sự thật sáng tỏ, bớt lo âu, vượt qua ảo tưởng."},
+  {name:"The Sun", img:"https://drive.google.com/uc?export=view&id=1302MNQqXJAJKk6zqHpp-jUHZjmKudu1L", meaning_up:"Thành công, niềm vui, sự trong sáng, năng lượng tích cực.", meaning_rev:"Tự tin quá mức, chậm tiến, niềm vui bị trì hoãn."},
+  {name:"Judgement", img:"https://drive.google.com/uc?export=view&id=1NnvvrECCRTQ2kL3e_IU-BdQEwASaIHrY", meaning_up:"Thức tỉnh, quyết định lớn, bước ngoặt, nghiệp quả.", meaning_rev:"Do dự, tự phê phán quá mức, lặp sai lầm cũ."},
+  {name:"The World", img:"https://drive.google.com/uc?export=view&id=1hL_po2WjaQ2l_nvjDZtiJeS26-Ljtq3p", meaning_up:"Hoàn thành, trọn vẹn, kết thúc đẹp, đạt mục tiêu.", meaning_rev:"Còn thiếu một bước cuối, chưa thật sự khép lại."}
 ];
 
-// --------- end deck ---------
+// ------------- HỖ TRỢ -------------
+function esc(s){return s? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : '';}
+function randInt(max){return Math.floor(Math.random()*max);}
 
-// Hữu ích: escape html
-function esc(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// Random helper
-function randInt(max){ return Math.floor(Math.random()*max); }
-
-// Rút 3 lá không trùng
-function drawThree() {
+// ------------- RÚT 3 LÁ -------------
+function drawThree(){
   const deck = tarotDeck.slice();
   const picks = [];
   for(let i=0;i<3;i++){
     const idx = randInt(deck.length);
-    const c = Object.assign({}, deck.splice(idx,1)[0]); // clone
-    // random orientation: 35% chance reversed
-    c.pos = Math.random() < 0.35 ? "Ngược" : "Thẳng";
-    // select meaning accordingly
-    c.meaning = (c.pos === "Thẳng") ? c.upright || c.upright === undefined ? c.upright || c.upright : c.upright : c.reversed || c.reversed;
-    // but our data fields are upright/reversed; adapt:
-    c.meaning = (c.pos === "Thẳng") ? c.upright : c.reversed;
+    const c = Object.assign({}, deck.splice(idx,1)[0]);
+    c.pos = Math.random()<0.35?"Ngược":"Thẳng";
+    c.meaning = c.pos==="Thẳng"?c.meaning_up:c.meaning_rev;
     picks.push(c);
   }
-  return { past: picks[0], present: picks[1], future: picks[2] };
+  return {past:picks[0], present:picks[1], future:picks[2]};
 }
 
-// Sinh kết luận nâng cao (tiếng Việt), dựa trên topic, question, và 3 lá
-function generateSummaryVN(topicKey, question, past, present, future) {
-  // score
-  function s(pos){ return pos === "Thẳng" ? 1 : -1; }
-  const total = s(past.pos) + s(present.pos) + s(future.pos);
+// ------------- KẾT LUẬN CHI TIẾT -------------
+function generateSummaryVN(topicKey, question, past, present, future){
+  const total = [past.pos,present.pos,future.pos].reduce((a,p)=>a+(p==="Thẳng"?1:-1),0);
+  const t = topicKey.toLowerCase();
+  let topicName="Tổng quát";
+  if(t.includes("tinh")||t.includes("yeu")) topicName="Tình yêu";
+  else if(t.includes("cong")||t.includes("viec")) topicName="Công việc";
+  else if(t.includes("hoc")) topicName="Học tập";
+  else if(t.includes("suc")||t.includes("sức")) topicName="Sức khỏe";
 
-  // map topic key to title + tone-line
-  const t = (topicKey || '').toString().toLowerCase();
-  let topicName = "Tổng quát";
-  if(t.includes('tinh') || t.includes('yeu') || t.includes('tình')) topicName = "Tình yêu";
-  else if(t.includes('cong') || t.includes('viec') || t.includes('công')) topicName = "Công việc";
-  else if(t.includes('hoc') || t.includes('học')) topicName = "Học tập";
-  else if(t.includes('suc') || t.includes('sức')) topicName = "Sức khỏe";
+  let toneLabel="";
+  if(total>=2) toneLabel="Năng lượng rất tích cực, nhiều điều đang ủng hộ bạn.";
+  else if(total===1) toneLabel="Tích cực nhưng cần nỗ lực — cơ hội có, nhưng không miễn phí.";
+  else if(total===0) toneLabel="Cân bằng — kết quả phụ thuộc nhiều vào quyết định của bạn.";
+  else if(total===-1) toneLabel="Khó khăn nhẹ — có một vài trở ngại cần xử lý.";
+  else toneLabel="Cảnh báo: nhiều thử thách hoặc trì trệ, cần thận trọng.";
 
-  // tone summary
-  let toneLabel = "";
-  if(total >= 2) toneLabel = "năng lượng rất tích cực — nhiều điều đang ủng hộ bạn";
-  else if(total === 1) toneLabel = "tích cực nhưng cần nỗ lực — cơ hội có, nhưng không đến hoàn toàn miễn phí";
-  else if(total === 0) toneLabel = "cân bằng — kết quả phụ thuộc nhiều vào quyết định của bạn lúc này";
-  else if(total === -1) toneLabel = "khó khăn nhẹ — có một vài trở ngại cần xử lý";
-  else toneLabel = "cảnh báo: nhiều thử thách hoặc sự trì trệ, cần thận trọng";
-
-  // nuance: relationship between cards, detect strong patterns
-  const polarities = [past.pos, present.pos, future.pos];
-  const allSame = polarities.every(p => p === polarities[0]);
-  let patternNote = "";
-  if(allSame && polarities[0] === "Thẳng") patternNote = "Cả bộ bài nghiêng về chiều thuận — xu hướng tích cực khá rõ ràng.";
-  else if(allSame && polarities[0] === "Ngược") patternNote = "Cả ba lá đều ngược — có thể là thời kỳ thử thách sâu hơn, cần tập trung vào xử lý nội tại.";
-  else patternNote = "Năng lượng có sự pha trộn — cần xem lá ở giữa (Hiện tại) như điểm mấu chốt.";
-
-  // build contextual lines by topic using card snippets for depth
-  function cardSnippet(c){
-    return `"${c.name}" (${c.pos}): ${c.meaning}`;
-  }
-
-  let topicAdvice = "";
+  const cardDetail = arr => arr.map(c=>`- "${c.name}" (${c.pos}): ${c.meaning}`).join("\n");
+  let topicAdvice="";
   switch(topicName){
-    case "Tình yêu":
-      topicAdvice = "Về tình cảm: chú ý thông điệp của trái tim và hành vi. Nếu lá hiện tại mang tính mở (Thẳng), hãy dũng cảm kết nối; nếu ngược, cần lắng nghe và tránh quyết định vội.";
-      break;
-    case "Công việc":
-      topicAdvice = "Về công việc: xem xét cơ hội với cái nhìn thực tế — tận dụng điểm mạnh (lá thuận) và chuẩn bị kế hoạch đối phó cho rủi ro (lá ngược).";
-      break;
-    case "Học tập":
-      topicAdvice = "Về học hành: nếu lá hiện tại thuận, hãy tận dụng thời điểm để tiến mạnh; nếu không, tập trung vào phương pháp và kỷ luật.";
-      break;
-    case "Sức khỏe":
-      topicAdvice = "Về sức khỏe: lắng nghe cơ thể, ưu tiên nghỉ ngơi và điều chỉnh thói quen; tránh bỏ qua dấu hiệu mệt mỏi.";
-      break;
-    default:
-      topicAdvice = "Nhìn chung: cân nhắc từng dấu hiệu nhỏ — hành động nhỏ, liên tục sẽ an toàn hơn bước nhảy lớn nếu năng lượng chưa ổn định.";
-  }
-
-  // Compose detailed summary
-  const header = `Kết luận chủ đề: ${topicName}${question? "\nCâu hỏi: " + question : ""}`;
-
-  const body = [
-    `Tổng quan: ${toneLabel}. ${patternNote}`,
-    `Chi tiết từng lá:`,
-    `${cardSnippet(past)}`,
-    `${cardSnippet(present)}`,
-    `${cardSnippet(future)}`,
-    ``,
-    `${topicAdvice}`,
-    ``,
-    `Gợi ý hành động ngắn:`,
-    `• Nhìn hiện tại: tập trung vào "${present.name}" như điểm mấu chốt;`,
-    `• Hành động nhỏ: chia bước, ưu tiên bước có rủi ro thấp nhưng tác động cao;`,
-    `• Tâm lý: giữ bình tĩnh, tránh quyết định lớn khi cả 3 lá nghiêng tiêu cực.`,
-    ``,
-    `Lời nhắn sâu sắc: Hãy coi bộ bài như tấm gương — nó không ra lệnh, mà mời bạn suy ngẫm. Dấu hiệu nhỏ hôm nay có thể dẫn đến thay đổi lớn ngày mai.`
-  ].join("\n");
-
-  return [header, "", body].join("\n");
-}
-
-// ---------- Render / UI logic ----------
-const cardEls = [
-  document.getElementById('card0'),
-  document.getElementById('card1'),
-  document.getElementById('card2')
-];
-
-function renderThree(obj){
-  // obj = { past, present, future }
-  const arr = [obj.past, obj.present, obj.future];
-  arr.forEach((c,i)=>{
-    const cardEl = cardEls[i];
-    const front = cardEl.querySelector('.card-front');
-    const back = cardEl.querySelector('.card-back');
-    // prepare front HTML
-    front.innerHTML = `
-      <img src="${esc(c.img)}" alt="${esc(c.name)}">
-      <div class="card-title">${esc(c.name)}</div>
-      <div class="card-pos">${esc(c.pos)}</div>
-      <div class="card-meaning" style="display:none">${esc(c.meaning)}</div>
-    `;
-    // back shows meaning & pos & name (user sees after flip)
-    back.innerHTML = `<div style="text-align:center"><div style="font-weight:700">${esc(c.name)} (${esc(c.pos)})</div></div>
-      <div style="margin-top:8px;font-size:13px;color:#eef;text-align:left">${esc(c.meaning)}</div>`;
-    // ensure card is unflipped initially
-    cardEl.classList.remove('flip');
-    // allow click to toggle flip
-    cardEl.onclick = ()=> cardEl.classList.toggle('flip');
-  });
-
-  // sequence flip animation (auto flip each in turn for dramatic reveal)
-  cardEls.forEach(el=> el.classList.remove('flip'));
-  setTimeout(()=> cardEls[0].classList.add('flip'), 300);
-  setTimeout(()=> cardEls[1].classList.add('flip'), 900);
-  setTimeout(()=> cardEls[2].classList.add('flip'), 1500);
-}
-
-// Hook up buttons
-document.getElementById('drawBtn').addEventListener('click', ()=>{
-  document.getElementById('status').textContent = 'Đang xáo và rút bài...';
-  const topic = document.getElementById('topic').value;
-  const question = document.getElementById('question').value.trim();
-  // draw
-  const result = drawThree();
-  // render
-  renderThree(result);
-  // generate summary after flips
-  setTimeout(()=>{
-    const summary = generateSummaryVN(topic, question, result.past, result.present, result.future);
-    document.getElementById('summaryText').textContent = summary;
-    document.getElementById('summaryBox').style.display = 'block';
-    document.getElementById('status').textContent = 'Hoàn tất — bạn có thể bấm từng lá để lật/đọc lại.';
-  }, 1900);
-});
-
-// reset
-document.getElementById('resetBtn').addEventListener('click', ()=>{
-  // clear cards back to mystery
-  cardEls.forEach(el=>{
-    el.querySelector('.card-front').innerHTML = '';
-    el.querySelector('.card-back').innerHTML = 'BÍ ẨN';
-    el.classList.remove('flip');
-  });
-  document.getElementById('summaryBox').style.display = 'none';
-  document.getElementById('summaryText').textContent = '';
-  document.getElementById('question').value = '';
-  document.getElementById('status').textContent = '';
-});
-</script>
-</body>
-</html>
-
-
+    case "Tình yêu": topicAdvice="Chú ý thông điệp của trái tim; nếu lá hiện tại Thẳng, hãy dũng cảm kết nối; nếu Ngược, lắng nghe và tránh quyết định vội."; break;
+    case "Công việc": topicAdvice="Xem xét cơ hội thực tế — tận dụng điểm mạnh (Thẳng) và chuẩn bị đối phó rủi ro (Ngược)."; break;
+    case "Học tập": topicAdvice="Lá hiện tại thuận thì tiến mạnh; nếu ngược, tập trung phương pháp và kỷ luật."; break;
+    case "Sức khỏe": topicAdvice
