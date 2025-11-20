@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Tarot 3 lá — Bói theo chủ đề (Major Arcana)</title>
+<style>
+  :root{
+    --bg:#0b0720;
+    --panel:#0f1224;
+    --accent:#8b5cf6;
+    --muted:#c9c9e6;
+    --card-back: linear-gradient(135deg,#4c1d95,#7c3aed);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,var(--bg),#0b0b1a);color:var(--muted);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1100px;margin:28px auto;padding:20px}
+  .panel{background:rgba(255,255,255,0.02);border-radius:14px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
+  h1{margin:0;color:#fff;font-size:24px}
+  .lead{color:#d6d6f8;margin-top:8px}
+  .controls{display:flex;gap:12px;align-items:center;margin-top:14px}
+  select, input[type="text"]{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted)}
+  button{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+  .btn-primary{background:linear-gradient(90deg,var(--accent),#6d28d9);color:white}
+  .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+
+  .cards-row{display:flex;gap:18px;justify-content:center;margin-top:22px}
+  .card-outer{width:180px;height:300px;perspective:1400px}
+  .card{width:100%;height:100%;border-radius:12px;position:relative;transform-style:preserve-3d;transition:transform 0.9s cubic-bezier(.2,.9,.2,1);cursor:pointer;box-shadow:0 18px 40px rgba(0,0,0,0.5)}
+  .card.flip{transform:rotateY(180deg)}
+  .card-face{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:12px}
+  .card-back{background:var(--card-back);color:white;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:16px}
+  .card-front{transform:rotateY(180deg);background:linear-gradient(180deg,#101224,#15163a);color:var(--muted);overflow:auto}
+  .card-front img{width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:8px}
+  .card-title{font-weight:700;color:#fff;margin-bottom:6px}
+  .card-pos{font-size:13px;color:#cfcff0;margin-bottom:6px}
+  .card-meaning{font-size:13px;color:#dfe3ff;white-space:pre-wrap}
+
+  .summary{margin-top:18px;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);color:var(--muted)}
+  pre.summary-text{white-space:pre-wrap;margin:0;color:#eef}
+
+  .history{margin-top:12px;color:#b9bcd9;font-size:13px}
+
+  @media (max-width:900px){
+    .cards-row{flex-wrap:wrap}
+    .card-outer{width:43%;height:260px}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="panel">
+      <h1>Tarot 3 lá — Past / Present / Future</h1>
+      <div class="lead">Chọn chủ đề, nhập (tuỳ chọn) câu hỏi, bấm "Rút bài". Hệ thống rút 3 lá (không trùng), gán Thẳng/Ngược, hiển thị ý nghĩa từng lá và kết luận tổng quan theo chủ đề.</div>
+
+      <div class="controls">
+        <select id="topic">
+          <option value="tongquat">Tổng quát</option>
+          <option value="tinhyeu">Tình yêu</option>
+          <option value="congviec">Công việc</option>
+          <option value="hoctap">Học tập</option>
+          <option value="suckhoe">Sức khỏe</option>
+        </select>
+
+        <input id="question" type="text" placeholder="Nhập câu hỏi (tùy chọn)" style="flex:1">
+
+        <button id="drawBtn" class="btn-primary">Rút 3 lá</button>
+        <button id="resetBtn" class="btn-ghost">Làm mới</button>
+      </div>
+
+      <div class="cards-row" id="cardsRow">
+        <div class="card-outer"><div id="card0" class="card"><div class="card-face card-back">BÍ ẨN</div><div class="card-face card-front"></div></div></div>
+        <div class="card-outer"><div id="card1" class="card"><div class="card-face card-back">BÍ ẨN</div><div class="card-face card-front"></div></div></div>
+        <div class="card-outer"><div id="card2" class="card"><div class="card-face card-back">BÍ ẨN</div><div class="card-face card-front"></div></div></div>
+      </div>
+
+      <div id="summaryBox" class="summary" style="display:none">
+        <div style="font-weight:700;color:#fff">Kết luận tổng quan</div>
+        <pre id="summaryText" class="summary-text"></pre>
+      </div>
+
+      <div id="status" class="history"></div>
+    </div>
+  </div>
+
+<script>
+/*
+  TAROT 3 LÁ — Toàn bộ 22 lá Major Arcana
+  Mỗi lá: { name, img, upright, reversed }
+  NOTE: các link img là ví dụ. Thay bằng link ảnh của bạn (Drive/host).
+*/
+
+// --------- Deck (22 Major Arcana) --------------
+const tarotDeck = [
+  {
+    name: "The Fool",
+    img: "https://i.imgur.com/0Fool.png", // Thay bằng link thật
+    upright: "Khởi đầu mới, bước vào hành trình với niềm tin và ngây thơ. Hứa hẹn cơ hội, mời gọi phiêu lưu và sáng tạo không ràng buộc.",
+    reversed: "Thiếu suy xét, hành động liều lĩnh, bỏ qua dấu hiệu cảnh báo. Có thể là dấu hiệu cần chuẩn bị kĩ trước khi bước đi."
+  },
+  {
+    name: "The Magician",
+    img: "https://i.imgur.com/1Magician.png",
+    upright: "Khả năng biến ý tưởng thành hành động; tài năng, ý chí và sự tập trung đang ở phía bạn. Thời điểm để hành động.",
+    reversed: "Lạm dụng tài năng, gian lận, tự đánh lừa hoặc thiếu tập trung. Cần hoà hợp ý định và hành động."
+  },
+  {
+    name: "The High Priestess",
+    img: "https://i.imgur.com/2HighPriestess.png",
+    upright: "Trực giác mạnh mẽ, bí mật, cần lắng nghe tiếng nói nội tâm. Thích hợp cho nghiên cứu, chiêm nghiệm.",
+    reversed: "Mất liên hệ với trực giác, thông tin bị che khuất hoặc hiểu lầm. Cẩn trọng với thông tin nửa vời."
+  },
+  {
+    name: "The Empress",
+    img: "https://i.imgur.com/3Empress.png",
+    upright: "Sinh sôi, nuôi dưỡng, sáng tạo. Giai đoạn thuận lợi cho mọi việc bắt đầu và phát triển.",
+    reversed: "Phụ thuộc, nuôi dưỡng thái quá hoặc lơ là bản thân. Cần chú ý chăm sóc cả tinh thần lẫn thể chất."
+  },
+  {
+    name: "The Emperor",
+    img: "https://i.imgur.com/4Emperor.png",
+    upright: "Trật tự, quyền lực, cấu trúc và lãnh đạo. Thời điểm cần quyết đoán và nắm quyền kiềm chế.",
+    reversed: "Cứng nhắc, lạm quyền hoặc thiếu linh hoạt. Tránh áp đặt ý chí lên người khác."
+  },
+  {
+    name: "The Hierophant",
+    img: "https://i.imgur.com/5Hierophant.png",
+    upright: "Giá trị truyền thống, học hỏi từ người đi trước, tìm một mentor hoặc hệ thống để đi theo.",
+    reversed: "Nổi loạn với chuẩn mực, từ chối luật lệ; hoặc cần tìm phương pháp học mới phù hợp hơn."
+  },
+  {
+    name: "The Lovers",
+    img: "https://i.imgur.com/6Lovers.png",
+    upright: "Tình yêu, lựa chọn có chiều sâu, hòa hợp và liên kết cảm xúc. Quyết định quan trọng liên quan đến mối quan hệ.",
+    reversed: "Mâu thuẫn, lựa chọn sai, hoặc cấu trúc mối quan hệ cần nhìn lại. Tránh quyết định bốc đồng."
+  },
+  {
+    name: "The Chariot",
+    img: "https://i.imgur.com/7Chariot.png",
+    upright: "Thắng lợi nhờ ý chí và kỷ luật. Tiến lên bằng quyết tâm kiểm soát hoàn cảnh.",
+    reversed: "Mất kiểm soát, xung đột nội tại, cần đánh giá lại chiến lược để tránh va chạm."
+  },
+  {
+    name: "Strength",
+    img: "https://i.imgur.com/8Strength.png",
+    upright: "Lòng can đảm, sức mạnh nội tâm, kiên nhẫn và nhân từ. Vượt nghịch cảnh bằng tâm thế bình tĩnh.",
+    reversed: "Thiếu tự tin, kiệt sức, dễ bị khuấy động cảm xúc. Cần hồi phục và tìm lại nội lực."
+  },
+  {
+    name: "The Hermit",
+    img: "https://i.imgur.com/9Hermit.png",
+    upright: "Tìm kiếm nội tâm, cần thời gian cô độc để tìm câu trả lời. Học hỏi qua im lặng và tĩnh lặng.",
+    reversed: "Cô lập quá mức hoặc trì hoãn giao tiếp; có thể là dấu hiệu của lẩn tránh vấn đề."
+  },
+  {
+    name: "Wheel of Fortune",
+    img: "https://i.imgur.com/10Wheel.png",
+    upright: "Chu kỳ, cơ hội, vận may và thay đổi. Một bước ngoặt có thể đến, hãy chuẩn bị đón nhận.",
+    reversed: "Kháng cự thay đổi, vận may bị trì hoãn; cần thích ứng để giảm thiểu tổn thất."
+  },
+  {
+    name: "Justice",
+    img: "https://i.imgur.com/11Justice.png",
+    upright: "Công bằng, quyết định minh bạch, trách nhiệm và sự cân bằng. Sự thật được phơi bày.",
+    reversed: "Bất công, thiên vị, hoặc kết quả bị trì hoãn; cần minh bạch hơn trong hành động."
+  },
+  {
+    name: "The Hanged Man",
+    img: "https://i.imgur.com/12Hanged.png",
+    upright: "Tạm dừng để nhìn nhận lại, đổi góc nhìn. Hi sinh có chủ đích để nhận thức mới.",
+    reversed: "Bế tắc, trì hoãn thiếu lối thoát; cần động lực mới để phá vỡ vòng lẩn quẩn."
+  },
+  {
+    name: "Death",
+    img: "https://i.imgur.com/13Death.png",
+    upright: "Kết thúc để mở ra điều mới; chuyển hóa sâu sắc, giải phóng cũ để đón mới.",
+    reversed: "Kháng cự thay đổi, trì trệ hoặc chậm chuyển hoá; cần quyết liệt buông bỏ."
+  },
+  {
+    name: "Temperance",
+    img: "https://i.imgur.com/14Temperance.png",
+    upright: "Hài hòa, điều độ, chữa lành; pha trộn các yếu tố để tìm sự trung dung.",
+    reversed: "Mất cân bằng, thiếu điều độ; hãy điều chỉnh lại thói quen và mối quan hệ."
+  },
+  {
+    name: "The Devil",
+    img: "https://i.imgur.com/15Devil.png",
+    upright: "Ràng buộc, cám dỗ, thói quen xấu hoặc sự phụ thuộc; đối diện bóng tối cá nhân.",
+    reversed: "Bắt đầu giải phóng khỏi ràng buộc, có cơ hội chiết thoát nếu dám đối mặt."
+  },
+  {
+    name: "The Tower",
+    img: "https://i.imgur.com/16Tower.png",
+    upright: "Sụp đổ đột ngột, phơi bày chân tường; thay đổi mạnh mẽ nhưng mở đường cho tái thiết.",
+    reversed: "Sự cố nhỏ hơn hoặc né tránh sự thật; cảnh giác vì nền tảng có thể yếu."
+  },
+  {
+    name: "The Star",
+    img: "https://i.imgur.com/17Star.png",
+    upright: "Hy vọng, chữa lành, niềm tin vào tương lai; nguồn cảm hứng và phục hồi.",
+    reversed: "Mất hy vọng tạm thời, thiếu động lực; cần tìm nguồn cảm hứng mới."
+  },
+  {
+    name: "The Moon",
+    img: "https://i.imgur.com/18Moon.png",
+    upright: "Bí ẩn, trực giác, giấc mơ, nỗi sợ và ẩn ý; hãy tin vào trực giác nhưng kiểm chứng thực tế.",
+    reversed: "Ảo giác, lẫn lộn; thông tin sai lệch hoặc cảm xúc áp đảo khiến hiểu lầm."
+  },
+  {
+    name: "The Sun",
+    img: "https://i.imgur.com/19Sun.png",
+    upright: "Sáng tỏ, niềm vui, thành tựu và sự rõ ràng; thành công và năng lượng tươi sáng.",
+    reversed: "Thành công tạm thời, chậm trễ nhỏ; cần duy trì thái độ lạc quan nhưng thực tế."
+  },
+  {
+    name: "Judgement",
+    img: "https://i.imgur.com/20Judgement.png",
+    upright: "Tỉnh thức, đánh giá lại, cơ hội tái sinh; thời điểm nhìn lại và hành động có trách nhiệm.",
+    reversed: "Tự phán xét quá mức hoặc trì hoãn thay đổi; cần dũng khí chấp nhận và tiến lên."
+  },
+  {
+    name: "The World",
+    img: "https://i.imgur.com/21World.png",
+    upright: "Hoàn thành, viên mãn, đạt được mục tiêu; cảm giác trọn vẹn và hội nhập.",
+    reversed: "Chưa hoàn tất, cảm giác thiếu hụt nhỏ; cần hoàn thiện nốt những chi tiết còn sót."
+  }
+];
+// --------- end deck ---------
+
+// Hữu ích: escape html
+function esc(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// Random helper
+function randInt(max){ return Math.floor(Math.random()*max); }
+
+// Rút 3 lá không trùng
+function drawThree() {
+  const deck = tarotDeck.slice();
+  const picks = [];
+  for(let i=0;i<3;i++){
+    const idx = randInt(deck.length);
+    const c = Object.assign({}, deck.splice(idx,1)[0]); // clone
+    // random orientation: 35% chance reversed
+    c.pos = Math.random() < 0.35 ? "Ngược" : "Thẳng";
+    // select meaning accordingly
+    c.meaning = (c.pos === "Thẳng") ? c.upright || c.upright === undefined ? c.upright || c.upright : c.upright : c.reversed || c.reversed;
+    // but our data fields are upright/reversed; adapt:
+    c.meaning = (c.pos === "Thẳng") ? c.upright : c.reversed;
+    picks.push(c);
+  }
+  return { past: picks[0], present: picks[1], future: picks[2] };
+}
+
+// Sinh kết luận nâng cao (tiếng Việt), dựa trên topic, question, và 3 lá
+function generateSummaryVN(topicKey, question, past, present, future) {
+  // score
+  function s(pos){ return pos === "Thẳng" ? 1 : -1; }
+  const total = s(past.pos) + s(present.pos) + s(future.pos);
+
+  // map topic key to title + tone-line
+  const t = (topicKey || '').toString().toLowerCase();
+  let topicName = "Tổng quát";
+  if(t.includes('tinh') || t.includes('yeu') || t.includes('tình')) topicName = "Tình yêu";
+  else if(t.includes('cong') || t.includes('viec') || t.includes('công')) topicName = "Công việc";
+  else if(t.includes('hoc') || t.includes('học')) topicName = "Học tập";
+  else if(t.includes('suc') || t.includes('sức')) topicName = "Sức khỏe";
+
+  // tone summary
+  let toneLabel = "";
+  if(total >= 2) toneLabel = "năng lượng rất tích cực — nhiều điều đang ủng hộ bạn";
+  else if(total === 1) toneLabel = "tích cực nhưng cần nỗ lực — cơ hội có, nhưng không đến hoàn toàn miễn phí";
+  else if(total === 0) toneLabel = "cân bằng — kết quả phụ thuộc nhiều vào quyết định của bạn lúc này";
+  else if(total === -1) toneLabel = "khó khăn nhẹ — có một vài trở ngại cần xử lý";
+  else toneLabel = "cảnh báo: nhiều thử thách hoặc sự trì trệ, cần thận trọng";
+
+  // nuance: relationship between cards, detect strong patterns
+  const polarities = [past.pos, present.pos, future.pos];
+  const allSame = polarities.every(p => p === polarities[0]);
+  let patternNote = "";
+  if(allSame && polarities[0] === "Thẳng") patternNote = "Cả bộ bài nghiêng về chiều thuận — xu hướng tích cực khá rõ ràng.";
+  else if(allSame && polarities[0] === "Ngược") patternNote = "Cả ba lá đều ngược — có thể là thời kỳ thử thách sâu hơn, cần tập trung vào xử lý nội tại.";
+  else patternNote = "Năng lượng có sự pha trộn — cần xem lá ở giữa (Hiện tại) như điểm mấu chốt.";
+
+  // build contextual lines by topic using card snippets for depth
+  function cardSnippet(c){
+    return `"${c.name}" (${c.pos}): ${c.meaning}`;
+  }
+
+  let topicAdvice = "";
+  switch(topicName){
+    case "Tình yêu":
+      topicAdvice = "Về tình cảm: chú ý thông điệp của trái tim và hành vi. Nếu lá hiện tại mang tính mở (Thẳng), hãy dũng cảm kết nối; nếu ngược, cần lắng nghe và tránh quyết định vội.";
+      break;
+    case "Công việc":
+      topicAdvice = "Về công việc: xem xét cơ hội với cái nhìn thực tế — tận dụng điểm mạnh (lá thuận) và chuẩn bị kế hoạch đối phó cho rủi ro (lá ngược).";
+      break;
+    case "Học tập":
+      topicAdvice = "Về học hành: nếu lá hiện tại thuận, hãy tận dụng thời điểm để tiến mạnh; nếu không, tập trung vào phương pháp và kỷ luật.";
+      break;
+    case "Sức khỏe":
+      topicAdvice = "Về sức khỏe: lắng nghe cơ thể, ưu tiên nghỉ ngơi và điều chỉnh thói quen; tránh bỏ qua dấu hiệu mệt mỏi.";
+      break;
+    default:
+      topicAdvice = "Nhìn chung: cân nhắc từng dấu hiệu nhỏ — hành động nhỏ, liên tục sẽ an toàn hơn bước nhảy lớn nếu năng lượng chưa ổn định.";
+  }
+
+  // Compose detailed summary
+  const header = `Kết luận chủ đề: ${topicName}${question? "\nCâu hỏi: " + question : ""}`;
+
+  const body = [
+    `Tổng quan: ${toneLabel}. ${patternNote}`,
+    `Chi tiết từng lá:`,
+    `${cardSnippet(past)}`,
+    `${cardSnippet(present)}`,
+    `${cardSnippet(future)}`,
+    ``,
+    `${topicAdvice}`,
+    ``,
+    `Gợi ý hành động ngắn:`,
+    `• Nhìn hiện tại: tập trung vào "${present.name}" như điểm mấu chốt;`,
+    `• Hành động nhỏ: chia bước, ưu tiên bước có rủi ro thấp nhưng tác động cao;`,
+    `• Tâm lý: giữ bình tĩnh, tránh quyết định lớn khi cả 3 lá nghiêng tiêu cực.`,
+    ``,
+    `Lời nhắn sâu sắc: Hãy coi bộ bài như tấm gương — nó không ra lệnh, mà mời bạn suy ngẫm. Dấu hiệu nhỏ hôm nay có thể dẫn đến thay đổi lớn ngày mai.`
+  ].join("\n");
+
+  return [header, "", body].join("\n");
+}
+
+// ---------- Render / UI logic ----------
+const cardEls = [
+  document.getElementById('card0'),
+  document.getElementById('card1'),
+  document.getElementById('card2')
+];
+
+function renderThree(obj){
+  // obj = { past, present, future }
+  const arr = [obj.past, obj.present, obj.future];
+  arr.forEach((c,i)=>{
+    const cardEl = cardEls[i];
+    const front = cardEl.querySelector('.card-front');
+    const back = cardEl.querySelector('.card-back');
+    // prepare front HTML
+    front.innerHTML = `
+      <img src="${esc(c.img)}" alt="${esc(c.name)}">
+      <div class="card-title">${esc(c.name)}</div>
+      <div class="card-pos">${esc(c.pos)}</div>
+      <div class="card-meaning" style="display:none">${esc(c.meaning)}</div>
+    `;
+    // back shows meaning & pos & name (user sees after flip)
+    back.innerHTML = `<div style="text-align:center"><div style="font-weight:700">${esc(c.name)} (${esc(c.pos)})</div></div>
+      <div style="margin-top:8px;font-size:13px;color:#eef;text-align:left">${esc(c.meaning)}</div>`;
+    // ensure card is unflipped initially
+    cardEl.classList.remove('flip');
+    // allow click to toggle flip
+    cardEl.onclick = ()=> cardEl.classList.toggle('flip');
+  });
+
+  // sequence flip animation (auto flip each in turn for dramatic reveal)
+  cardEls.forEach(el=> el.classList.remove('flip'));
+  setTimeout(()=> cardEls[0].classList.add('flip'), 300);
+  setTimeout(()=> cardEls[1].classList.add('flip'), 900);
+  setTimeout(()=> cardEls[2].classList.add('flip'), 1500);
+}
+
+// Hook up buttons
+document.getElementById('drawBtn').addEventListener('click', ()=>{
+  document.getElementById('status').textContent = 'Đang xáo và rút bài...';
+  const topic = document.getElementById('topic').value;
+  const question = document.getElementById('question').value.trim();
+  // draw
+  const result = drawThree();
+  // render
+  renderThree(result);
+  // generate summary after flips
+  setTimeout(()=>{
+    const summary = generateSummaryVN(topic, question, result.past, result.present, result.future);
+    document.getElementById('summaryText').textContent = summary;
+    document.getElementById('summaryBox').style.display = 'block';
+    document.getElementById('status').textContent = 'Hoàn tất — bạn có thể bấm từng lá để lật/đọc lại.';
+  }, 1900);
+});
+
+// reset
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  // clear cards back to mystery
+  cardEls.forEach(el=>{
+    el.querySelector('.card-front').innerHTML = '';
+    el.querySelector('.card-back').innerHTML = 'BÍ ẨN';
+    el.classList.remove('flip');
+  });
+  document.getElementById('summaryBox').style.display = 'none';
+  document.getElementById('summaryText').textContent = '';
+  document.getElementById('question').value = '';
+  document.getElementById('status').textContent = '';
+});
+</script>
+</body>
+</html>
