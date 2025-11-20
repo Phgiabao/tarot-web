@@ -118,7 +118,7 @@ const tarotDeck = [
     file: "01_the_magician.jpg",
     img: "https://drive.google.com/uc?export=view&id=1F4kzdwnct_Itrmy9avgiRashHt373UHQ",
     meaning_up: "Tập trung, sáng tạo, làm chủ kỹ năng, biến ý tưởng thành hiện thực.",
-meaning_rev: "Thiếu tập trung, lừa dối, lạm dụng quyền năng, khả năng chưa khai mở."
+    meaning_rev: "Thiếu tập trung, lừa dối, lạm dụng quyền năng, khả năng chưa khai mở."
   },
   {
     name: "The High Priestess",
@@ -181,7 +181,7 @@ meaning_rev: "Thiếu tập trung, lừa dối, lạm dụng quyền năng, kh�
     file: "10_wheel_of_fortune.jpg",
     img: "https://drive.google.com/uc?export=view&id=1RJbR-HoHQj-UXN8g2Klzt2OXJHUMztcC",
     meaning_up: "Vận may thay đổi tích cực, chu kỳ mới mở ra.",
-meaning_rev: "Trì trệ, sự kiện lặp lại, cảm giác mắc kẹt."
+    meaning_rev: "Trì trệ, sự kiện lặp lại, cảm giác mắc kẹt."
   },
   {
     name: "Justice",
@@ -249,7 +249,7 @@ meaning_rev: "Trì trệ, sự kiện lặp lại, cảm giác mắc kẹt."
   {
     name: "Judgement",
     file: "20_judgement.jpg",
-img: "https://drive.google.com/uc?export=view&id=1NnvvrECCRTQ2kL3e_IU-BdQEwASaIHrY",
+    img: "https://drive.google.com/uc?export=view&id=1NnvvrECCRTQ2kL3e_IU-BdQEwASaIHrY",
     meaning_up: "Thức tỉnh, quyết định lớn, bước ngoặt, nghiệp quả.",
     meaning_rev: "Do dự, tự phê phán quá mức, lặp sai lầm cũ."
   },
@@ -282,7 +282,7 @@ function drawThree() {
     // select meaning accordingly
     c.meaning = (c.pos === "Thẳng") ? c.meaning_up || c.meaning_up === undefined ? c.meaning_up || c.meaning_up : c.meaning_up : c.meaning_rev || c.meaning_rev;
     // but our data fields are upright/reversed; adapt:
-    c.meaning = (c.pos === "Thẳng") ? c.upright : c.reversed;
+    c.meaning = (c.pos === "Thẳng") ? c.meaning_up : c.meaning_rev;
     picks.push(c);
   }
   return { past: picks[0], present: picks[1], future: picks[2] };
@@ -434,3 +434,4 @@ document.getElementById('resetBtn').addEventListener('click', ()=>{
 </script>
 </body>
 </html>
+
